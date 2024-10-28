@@ -26,11 +26,12 @@ jobs:
           npm install
           npm run build --if-present
 
-      - name: Copy file
-        uses: canastro/copy-action@0.0.2
+      - name: Copy Directory
+        uses: MadaraUchiha/copy-action@0.0.1
         with:
           source: ./public
           target: ./.next/standalone/public
+          
           
 
       - name: Zip Release
