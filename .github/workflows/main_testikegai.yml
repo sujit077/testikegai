@@ -31,14 +31,14 @@ jobs:
           cp -R ./public ./.next/standalone/public
           cp -R ./.next/static ./.next/standalone/.next/static
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./.next/standalone/* -r
+      # - name: Zip artifact for deployment
+      #   run: zip release.zip ./.next/standalone/* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: release.zip
+          path: ./.next/standalone/*
 
   deploy:
     runs-on: ubuntu-latest
@@ -52,9 +52,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: node-app
-
-      - name: Unzip artifact for deployment
-        run: unzip release.zip
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
