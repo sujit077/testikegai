@@ -26,11 +26,10 @@ jobs:
           npm install
           npm run build --if-present
 
-      - name: Copy Directory
-        uses: MadaraUchiha/copy-action@0.0.1
-        with:
-          source: ./public
-          target: ./.next/standalone/public
+      - name: Copy static files
+        run: |
+          cp -R ./public ./.next/standalone/public
+          cp -R ./.next/static ./.next/standalone/.next/static
           
           
 
