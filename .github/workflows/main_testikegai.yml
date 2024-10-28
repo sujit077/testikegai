@@ -26,18 +26,25 @@ jobs:
           npm install
           npm run build --if-present
 
-      - name: Copy static files
-        run: |
-          mkdir -p ./.next/standalone/public
-          mkdir -p ./.next/standalone/.next/static
-          cp -R ./public/* ./.next/standalone/public/
-          cp -R ./.next/static/* ./.next/standalone/.next/static/
+      - name: Copy file
+        uses: canastro/copy-action@0.0.2
+        with:
+          source: ./public
+          target: ./.next/standalone/public
+          
+
+      - name: Zip Release
+        uses: TheDoctor0/zip-release@0.7.6
+        with:
+          filename: release.zip
+          path: .next/standalone/*
+          
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: .next/standalone/*
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -59,4 +66,4 @@ jobs:
           app-name: 'testikegai'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_D64FEFE1B57A4033A06633F8C173E697 }}
-          package: .
+          package: release.zip
