@@ -37,7 +37,7 @@ jobs:
         uses: TheDoctor0/zip-release@0.7.6
         with:
           filename: release.zip
-          path: ./.next/standalone/*
+          path: ./.next/standalone
           
 
       - name: Upload artifact for deployment job
